@@ -10,13 +10,15 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
         signInAnonymously(auth);
       }
 
       setUser(user);
     });
+
+    return () => unsubscribe();
   }, []);
 
   return (
