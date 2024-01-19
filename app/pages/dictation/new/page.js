@@ -7,12 +7,15 @@ import { Input } from '@nextui-org/input';
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { FaUndo } from 'react-icons/fa';
+import DictationTitleInputModal from '@/app/components/dictation-title-input-modal';
+import { useDisclosure } from '@nextui-org/react';
 
 const WORD_INPUT_EMPTY_STATE = { id: '', en: '', he: '' };
 
 export default function Page({}) {
   const [wordInput, setWordInput] = useState(WORD_INPUT_EMPTY_STATE);
   const [wordsInputs, setWordsInputs] = useState([]);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const handleEnWordChange = (e) => {
     const { value } = e.target;
@@ -56,7 +59,11 @@ export default function Page({}) {
   };
 
   const handleSaveClick = () => {
-    console.log('save');
+    onOpen();
+  };
+
+  const handleTitleSubmit = (title) => {
+    console.log('title', title);
   };
 
   const renderFormTitle = () => {
@@ -128,6 +135,12 @@ export default function Page({}) {
           שמירת הכתבה
         </Button>
       ) : null}
+
+      <DictationTitleInputModal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        onSubmit={handleTitleSubmit}
+      />
     </div>
   );
 }
