@@ -4,11 +4,14 @@ import WordsTable from '@/app/components/words-table';
 import { Button } from '@nextui-org/button';
 import { Divider } from '@nextui-org/divider';
 import { Input } from '@nextui-org/input';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { FaUndo } from 'react-icons/fa';
 import DictationTitleInputModal from '@/app/components/dictation-title-input-modal';
 import { useDisclosure } from '@nextui-org/react';
+import { Timestamp, addDoc, collection } from 'firebase/firestore';
+import { db } from '@/app/lib/firebase/firebase';
+import { AuthContext } from '@/app/providers/AuthProvider';
 
 const WORD_INPUT_EMPTY_STATE = { id: '', en: '', he: '' };
 
@@ -16,6 +19,7 @@ export default function Page({}) {
   const [wordInput, setWordInput] = useState(WORD_INPUT_EMPTY_STATE);
   const [wordsInputs, setWordsInputs] = useState([]);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { user } = useContext(AuthContext);
 
   const handleEnWordChange = (e) => {
     const { value } = e.target;
@@ -62,8 +66,13 @@ export default function Page({}) {
     onOpen();
   };
 
-  const handleTitleSubmit = (title) => {
-    console.log('title', title);
+  const handleTitleSubmit = async (title) => {
+    await addDoc(collection(db, 'dictations'), {
+      userId: user.uid,
+      title: title,
+      words: wordsInputs,
+      createdAt: Timestamp.now(),
+    });
   };
 
   const renderFormTitle = () => {
