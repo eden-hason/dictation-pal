@@ -38,14 +38,16 @@ export default function Home() {
     <main className="flex flex-col items-center justify-between min-h-[inherit] p-4">
       <div className="w-full md:max-w-md">
         <p className="text-xl font-bold mb-4">ההכתבות שלי</p>
-        {dictations.map((dictation) => (
-          <DictationCard key={dictation.id} dictation={dictation} />
-        ))}
+        <div className="flex flex-col space-y-4">
+          {dictations.map((dictation) => (
+            <DictationCard key={dictation.id} dictation={dictation} />
+          ))}
+        </div>
       </div>
       <div className="w-full">
         <Button
           as={Link}
-          href="pages/dictation/new"
+          href="dictation/new"
           color="primary"
           variant="light"
           startContent={<FaPlus />}>
