@@ -5,6 +5,7 @@ import {
   CardBody,
   CardFooter,
   Divider,
+  Link,
 } from '@nextui-org/react';
 import { FaHourglassStart } from 'react-icons/fa';
 import { BsPencil } from 'react-icons/bs';
@@ -28,15 +29,18 @@ export default function DictationCard({ dictation }) {
       <Divider />
       <CardFooter className="bg-purple-100 py-2">
         <ButtonGroup variant="light" className="w-full justify-between">
-          <Button className="flex flex-col">
+          <Button
+            className="flex flex-col"
+            as={Link}
+            href={`dictation/${dictation.id}`}>
             <FaHourglassStart />
             <p className="text-xs">התחלה</p>
           </Button>
-          <Button className="flex flex-col">
+          <Button isDisabled className="flex flex-col">
             <BsPencil />
             <p className="text-xs">עריכה</p>
           </Button>
-          <Button className="flex flex-col">
+          <Button isDisabled className="flex flex-col">
             <BsTrash />
             <p className="text-xs">מחיקה</p>
           </Button>
