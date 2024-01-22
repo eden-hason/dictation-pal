@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <NextUIProvider>
             <Navbar />
-            <div className="min-h-[calc(100vh-64px)]">{children}</div>
+            {children}
           </NextUIProvider>
         </AuthProvider>
       </body>

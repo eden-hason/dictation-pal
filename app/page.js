@@ -13,6 +13,23 @@ import { getDocsData } from './lib/common-utils';
 export default function Home() {
   const { user } = useContext(AuthContext);
   const [dictations, setDictations] = useState([]);
+  const [windowHeight, setWindowHeight] = useState(
+    typeof window !== 'undefined' ? window.innerHeight : undefined
+  );
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setWindowHeight(window.innerHeight);
+      window.addEventListener('resize', () =>
+        setWindowHeight(window.innerHeight)
+      );
+    }
+
+    return () =>
+      window.removeEventListener('resize', () =>
+        setWindowHeight(window.innerHeight)
+      );
+  }, []);
 
   useEffect(() => {
     const fetchDictations = async () => {
@@ -35,7 +52,9 @@ export default function Home() {
   if (!user) return null;
 
   return (
-    <main className="flex flex-col items-center justify-between min-h-[inherit] p-4">
+    <main
+      style={{ minHeight: `${windowHeight - 64}px` }}
+      className={`flex flex-col items-center justify-between p-4`}>
       <div className="w-full md:max-w-md">
         <p className="text-xl font-bold mb-4">ההכתבות שלי</p>
         <div className="flex flex-col space-y-4">
