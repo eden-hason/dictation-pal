@@ -4,7 +4,7 @@ const Navbar = ({}) => {
   return (
     <_Navbar className="bg-slate-50">
       <NavbarBrand as={Link} href="/">
-        <div class="flex items-center">
+        <div className="flex items-center">
           <Chip
             className="ml-1 text-xs h-4"
             color="primary"
