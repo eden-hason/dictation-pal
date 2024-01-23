@@ -10,6 +10,8 @@ import {
 import { BsPencil } from 'react-icons/bs';
 import { BsTrash } from 'react-icons/bs';
 import { RxSpeakerLoud } from 'react-icons/rx';
+import EasySpeech from 'easy-speech';
+import { useEffect } from 'react';
 
 export default function WordsTable({
   className,
@@ -17,8 +19,20 @@ export default function WordsTable({
   onDeleteClick,
   onEditClick,
 }) {
-  const handlePlayClick = (text) => {
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+  useEffect(() => {
+    EasySpeech.init({ maxTimeout: 5000, interval: 250 })
+      .then(() => console.debug('load complete'))
+      .catch((e) => console.error(e));
+  }, []);
+
+  const handlePlayClick = async (text) => {
+    await EasySpeech.speak({
+      text: text,
+      pitch: 1,
+      rate: 1,
+      volume: 1,
+      boundary: (e) => console.debug('boundary reached'),
+    });
   };
 
   return (

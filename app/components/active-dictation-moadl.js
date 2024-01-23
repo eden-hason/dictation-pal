@@ -7,10 +7,17 @@ import {
 } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 import { shuffleArray } from '../lib/common-utils';
+import EasySpeech from 'easy-speech';
 
 export default function ActiveDictationModal({ words, isOpen, onOpenChange }) {
   const [wordIndex, setWordIndex] = useState(0);
   const [shuffleWords, setShuffleWords] = useState([]);
+
+  useEffect(() => {
+    EasySpeech.init({ maxTimeout: 5000, interval: 250 })
+      .then(() => console.debug('load complete'))
+      .catch((e) => console.error(e));
+  }, []);
 
   useEffect(() => {
     if (!isOpen && wordIndex === words.length - 1) resetActiveDictation();
@@ -70,9 +77,16 @@ export default function ActiveDictationModal({ words, isOpen, onOpenChange }) {
     }
   };
 
-  const playCurrentWord = () => {
+  const playCurrentWord = async () => {
     const word = shuffleWords[wordIndex].en;
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance(word));
+
+    await EasySpeech.speak({
+      text: word,
+      pitch: 1,
+      rate: 1,
+      volume: 1,
+      boundary: (e) => console.debug('boundary reached'),
+    });
   };
 
   return (
