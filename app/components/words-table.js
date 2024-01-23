@@ -26,8 +26,13 @@ export default function WordsTable({
   }, []);
 
   const handlePlayClick = async (text) => {
+    const voices = EasySpeech.voices();
+    const voice =
+      voices.find((v) => v.name === 'Aaron') || voices.find((v) => v.default);
+
     await EasySpeech.speak({
       text: text,
+      voice,
       pitch: 1,
       rate: 1,
       volume: 1,

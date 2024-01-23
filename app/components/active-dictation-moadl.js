@@ -80,8 +80,13 @@ export default function ActiveDictationModal({ words, isOpen, onOpenChange }) {
   const playCurrentWord = async () => {
     const word = shuffleWords[wordIndex].en;
 
+    const voices = EasySpeech.voices();
+    const voice =
+      voices.find((v) => v.name === 'Aaron') || voices.find((v) => v.default);
+
     await EasySpeech.speak({
       text: word,
+      voice,
       pitch: 1,
       rate: 1,
       volume: 1,
