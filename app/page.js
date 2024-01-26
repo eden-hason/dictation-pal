@@ -53,25 +53,29 @@ export default function Home() {
 
   return (
     <main
-      style={{ minHeight: `${windowHeight - 64}px` }}
-      className={`flex flex-col items-center justify-between p-4`}>
-      <div className="w-full md:max-w-md">
-        <p className="text-xl font-bold mb-4">ההכתבות שלי</p>
-        <div className="flex flex-col space-y-4">
-          {dictations.map((dictation) => (
-            <DictationCard key={dictation.id} dictation={dictation} />
-          ))}
+      style={{
+        minHeight: `${windowHeight - 64}px`,
+        height: `${windowHeight - 64}px`,
+      }}>
+      <div className="flex flex-col items-center justify-between p-4 h-full">
+        <div className="w-full md:max-w-md">
+          <p className="text-xl font-bold mb-4">ההכתבות שלי</p>
+          <div className="flex flex-col space-y-4">
+            {dictations.map((dictation) => (
+              <DictationCard key={dictation.id} dictation={dictation} />
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="w-full">
-        <Button
-          as={Link}
-          href="dictation/new"
-          color="primary"
-          variant="light"
-          startContent={<FaPlus />}>
-          הכתבה חדשה
-        </Button>
+        <div className="w-full md:max-w-md">
+          <Button
+            as={Link}
+            href="dictation/new"
+            color="primary"
+            variant="light"
+            startContent={<FaPlus />}>
+            הכתבה חדשה
+          </Button>
+        </div>
       </div>
     </main>
   );
