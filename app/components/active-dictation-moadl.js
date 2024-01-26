@@ -79,19 +79,10 @@ export default function ActiveDictationModal({ words, isOpen, onOpenChange }) {
 
   const playCurrentWord = async () => {
     const word = shuffleWords[wordIndex].en;
+    const utterThis = new SpeechSynthesisUtterance(word);
+    utterThis.lang = 'en-US';
 
-    const voices = EasySpeech.voices();
-    const voice =
-      voices.find((v) => v.name === 'Aaron') || voices.find((v) => v.default);
-
-    await EasySpeech.speak({
-      text: word,
-      voice,
-      pitch: 1,
-      rate: 1,
-      volume: 1,
-      boundary: (e) => console.debug('boundary reached'),
-    });
+    window.speechSynthesis.speak(utterThis);
   };
 
   return (
